@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #00183a, #457b9d, #a8dadc);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            font-family: 'Poppins','sans-serif';
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            color: #333;
+        }
+
+        .signup-container h2 {
+            font-weight: bold;
+            color: #1d3557;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #1d3557;
+        }
+
+        .form-control {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #00bcd4;
+            box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+        }
+
+        .submit-btn {
+            background: #457b9d;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #1d3557;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-link {
+            margin-top: 15px;
+        }
+
+        .login-link a {
+            color: #457b9d;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: #e63946;
+            color: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create an Account</h2>
+
+        <!-- Sign Up Form -->
+        <form action="/signup" method="POST">
+            <div class="mb-3 form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="mb-3 form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+
+            <div class="mb-3 form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Create a password" required minlength="6"
+                title="Password must be at least 6 characters long and may contain letters or numbers.">
+            </div>
+
+            <div class="mb-3 form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Re-enter your password" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+
+        <!-- Error Message Display -->
+        <% if (errorMessage) { %>
+            <div class="error-message">
+                <p><%= errorMessage %></p>
+            </div>
+        <% } %>
+
+        <!-- Login Link -->
+        <div class="login-link">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript for Password Validation -->
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+    
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Prevent form submission
+                alert('Passwords do not match!'); // Show an alert message
+            }
+        });
+    </script>
+</body>
+</html>

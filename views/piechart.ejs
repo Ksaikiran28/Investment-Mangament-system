@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Pie Chart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins','sans-serif';
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1d3557, #457b9d, #a8dadc);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: white;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            color: #fefefe;
+        }
+
+        canvas {
+            max-width: 800px;
+            max-height: 600px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 15px;
+            background: rgba(244, 241, 241, 0.9);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .button-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .back-btn, .logout-btn {
+            padding: 12px 25px;
+            background-color: #00bcd4;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .back-btn:hover, .logout-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h1>Investment Distribution by Sector</h1>
+    <canvas id="sectorPieChart"></canvas>
+
+    <div class="button-container">
+        <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
+    <script>
+        // Fetching data dynamically (replace with actual server-side injection)
+        const sectorData = <%- JSON.stringify(sectorNames) %>; // Pass sector names from the dashboard
+        const amountsData = <%- JSON.stringify(amounts) %>;    // Pass sector amounts from the dashboard
+
+        // Define colors for the pie chart
+        const predefinedColors = [
+            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+            '#FF5733', '#C70039', '#900C3F', '#581845', '#1E90FF', '#32CD32'
+        ];
+
+        // Assign colors to sectors
+        const colors = sectorData.map((_, index) => predefinedColors[index % predefinedColors.length]);
+
+        // Create the Pie Chart
+        const ctx = document.getElementById('sectorPieChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: sectorData,
+                datasets: [{
+                    data: amountsData,
+                    backgroundColor: colors,
+                    hoverBackgroundColor: colors.map(color => shadeColor(color, -20)), // Slightly darker on hover
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#ffffff',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const label = tooltipItem.label || '';
+                                const value = tooltipItem.raw || 0;
+                                return `${label}: ₹${value.toLocaleString()}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Function to darken colors for hover effect
+        function shadeColor(color, percent) {
+            const num = parseInt(color.slice(1), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+
+            return `#${(0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+                (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+                (B < 255 ? (B < 1 ? 0 : B) : 255))
+                .toString(16)
+                .slice(1).toUpperCase()}`;
+        }
+    </script>
+</body>
+</html>

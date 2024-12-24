@@ -1,0 +1,32 @@
+{
+  "name": "investor-dashboard",
+  "version": "1.0.0",
+  "description": "A dashboard application for managing and visualizing investment data.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sai Kiran",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "chart.js": "^4.4.7",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.11.5",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.16.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.4.2"
+  }
+}

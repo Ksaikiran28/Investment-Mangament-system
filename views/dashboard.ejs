@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1d3557, #457b9d, #a8dadc);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .dashboard-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.85); /* Light transparent white */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .dashboard-container h2 {
+            font-weight: bold;
+            color: #1d3557;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-container h4 {
+            color: #293132;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-container form label {
+            font-weight: bold;
+            color: #1d3557;
+        }
+
+        .btn-primary {
+            background-color: #457b9d;
+            border-color: #457b9d;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d3557;
+            border-color: #1d3557;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline-dark,
+        .btn-outline-danger {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: #1d3557;
+            color: white;
+            border-color: #1d3557;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+
+        .additional-links a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #calculatedInvestment {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1d3557;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome to Your Dashboard</h2>
+        <br>
+        <!-- Add New Investment Form -->
+        <section class="add-investment mb-4">
+            <h4 style="text-align: center;">Add New Investment</h4>
+            <form action="/add-investor" method="POST">
+                <div class="mb-3">
+                    <label for="company_name" class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter Company Name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="purchase_price" class="form-label">Purchase Price (₹)</label>
+                    <input type="number" class="form-control" id="purchase_price" name="purchase_price" placeholder="Enter Purchase Price" step="0.01" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="shares" class="form-label">Shares Invested</label>
+                    <input type="number" class="form-control" id="shares" name="shares" placeholder="Enter Number of Shares" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sector" class="form-label">Sector</label>
+                    <select class="form-select" id="sector" name="sector" required>
+                        <option value="" disabled selected>Select Sector</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Energy">Energy</option>
+                        <option value="Consumer Goods">Consumer Goods</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Automobile">Automobile</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Investment Amount (₹)</label>
+                    <input type="text" class="form-control" id="amount" name="amount" placeholder="Total Investment Amount" readonly>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Add Investment</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Total Investment -->
+        <div id="calculatedInvestment">
+            Total Investment: ₹<span id="totalInvestment">0.00</span>
+        </div>
+
+        <!-- Links for additional pages -->
+        <div class="additional-links text-center">
+            <a href="/stored-data" class="btn btn-outline-dark me-2">View All Stored Data</a>
+            <a href="/logout" class="btn btn-outline-danger">Logout</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript for calculating total investment -->
+    <script>
+        const purchasePriceInput = document.getElementById('purchase_price');
+        const sharesInput = document.getElementById('shares');
+        const amountInput = document.getElementById('amount');
+        const totalInvestmentDisplay = document.getElementById('totalInvestment');
+
+        // Function to calculate total investment
+        function calculateTotalInvestment() {
+            const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+            const shares = parseInt(sharesInput.value) || 0;
+            const totalInvestment = purchasePrice * shares;
+
+            amountInput.value = totalInvestment.toFixed(2); // Display in the form field
+            totalInvestmentDisplay.textContent = totalInvestment.toFixed(2); // Display in the summary
+        }
+
+        // Attach event listeners to update calculation on input change
+        purchasePriceInput.addEventListener('input', calculateTotalInvestment);
+        sharesInput.addEventListener('input', calculateTotalInvestment);
+        
+    </script>
+</body>
+</html>

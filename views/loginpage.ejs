@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+    body {
+        background: linear-gradient(135deg, #899b9e, #371937); /* Vibrant turquoise gradient */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background-color:#273879;
+    }
+
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(135deg, #273879, #b28290); /* Blue to light pink gradient */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            height: 80px; /* Increased height */
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 5px; /* Increased letter-spacing */
+            text-transform: uppercase; /* Capitalized title */
+            margin-left: 20px;
+        }
+
+        .navbar-nav .nav-item .nav-link {
+            color: black;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 10px 15px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #1d2b64;
+            background-color: #ffffff;
+        }
+
+        .navbar-logo {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            padding-left: 50px;
+            text-decoration-line: none;
+        }
+
+        .navbar-nav.ml-auto {
+            margin-left: auto;
+        }
+
+        .navbar-nav .nav-item .nav-link i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        /* Login Form Styling */
+        .login-container {
+            max-width: 420px;
+            margin: 80px auto;
+            padding: 40px;
+            background: rgba(150, 134, 134, 0.7); /* Semi-transparent background */
+            border-radius: 15px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .form-label {
+            color: #f8f9fa;
+        }
+
+        .form-control {
+            border-radius: 30px;
+            box-shadow: none;
+            margin-bottom: 15px;
+            padding: 15px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #00bcd4;
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #008c9e;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .signup-link a {
+            color: #00bcd4;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            color: #008c9e;
+        }
+
+        .error-message {
+            margin-top: 15px;
+            color: #f44336;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Adding animation to the login container */
+        .login-container {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-logo" href="#">
+            <i class="fas fa-coins"></i> Investpro
+        </a>
+        <div class="navbar-nav ml-auto">
+            <a class="nav-link" href="/signup"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <h2>Login</h2>
+
+        <!-- Login Form -->
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+
+        <!-- Sign-up Link -->
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+        </div>
+
+        <!-- Display Error Message -->
+        <% if (errorMessage) { %>
+            <div class="error-message">
+                <p><%= errorMessage %></p>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

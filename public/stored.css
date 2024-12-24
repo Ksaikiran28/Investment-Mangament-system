@@ -1,0 +1,124 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Total Investment Section */
+.total-investment {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Investment Table Container */
+.investment-table-container {
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+/* Table Styles */
+.investment-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.investment-table th, .investment-table td {
+    padding: 12px 20px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.investment-table th {
+    background-color: #00bcd4;
+    color: #fff;
+}
+
+.investment-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.investment-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button Styles */
+.view-piechart a, .back-to-dashboard a {
+    display: inline-block;
+    background-color:#45a049;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.view-piechart a:hover, .back-to-dashboard a:hover {
+    background-color: #0056b3;
+}
+
+/* Center Alignment for Back to Dashboard Link */
+.back-to-dashboard {
+    margin-top: 20px;
+}
+
+.center {
+    text-align: center;
+}
+        /* Flexbox for side-by-side buttons */
+        .buttons-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .buttons-container .btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            color: #000;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .buttons-container .btn:hover {
+            background-color: #ffffff;
+        }
+
+        .btn-info {
+            background-color: #00bcd4;
+            border: 2px solid #00bcd4;
+        }
+
+        .btn-warning {
+            background-color: #00bcd4;
+            border: 2px solid #00bcd4;
+        }

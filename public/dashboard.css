@@ -1,0 +1,156 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+}
+
+/* Add Investment Form */
+.add-investment {
+    margin-top: 30px;
+}
+
+.add-investment h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+form label {
+    font-size: 1rem;
+    color: #555;
+}
+
+form input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Investment Table */
+.investment-list {
+    margin-top: 40px;
+}
+
+.investment-list h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.investment-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.investment-table th, .investment-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.investment-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.investment-table td {
+    background-color: #fff;
+}
+
+.investment-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#investment {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Additional Links */
+.additional-links {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.additional-links a {
+    margin: 0 15px;
+    color:#ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.additional-links a:hover {
+    text-decoration: underline;
+}
+
+.back-btn {
+    padding: 10px 20px;
+    background-color: #45a049;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
