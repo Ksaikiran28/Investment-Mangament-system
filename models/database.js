@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
     user: 'saikiran',      // Ensure this is your MySQL username
     password: 'saikiran', // Replace with your MySQL password
     database: 'investorDB', // Database name
-    port: '3306'       // Default MySQL port
+    port: '3306'       // Default MySQL portl
 });
 
 connection.connect((err) => {
@@ -17,3 +17,4 @@ connection.connect((err) => {
 });
 
 module.exports = connection;
+

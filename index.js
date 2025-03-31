@@ -3,12 +3,20 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const axios = require('axios');
+require("dotenv").config();
+
 
 const app = express();
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.set('view engine', 'ejs');
+app.use(express.static("public"));
+
+
 
 // Session setup
 app.use(
@@ -143,17 +151,39 @@ app.get('/dashboard', (req, res) => {
     });
 });
 
+app.get("/predict", (req, res) => {
+    res.render("predict", { prediction: null, error: null });
+});
+
+// Handle form submission and send request to Flask API
+app.post("/predict", async (req, res) => {
+    const amount = req.body.amount;
+
+    try {
+        const response = await axios.post("http://127.0.0.1:5000/predict", { amount: parseFloat(amount) });
+        res.render("predict", { prediction: response.data, error: null });
+    } catch (error) {
+        res.render("predict", { prediction: null, error: "Error fetching prediction. Please try again." });
+    }
+});
+
+
+
 // Add investment handler
 app.post('/add-investor', (req, res) => {
     const { company_name, amount, shares, purchase_price, sector } = req.body;
 
-    if (!company_name || !amount || !shares || !purchase_price || !sector) {
-        return res.status(400).send('All fields are required.');
+    // Convert values to numbers
+    const parsedAmount = parseFloat(amount);
+    const parsedShares = parseInt(shares);
+    const parsedPurchasePrice = parseFloat(purchase_price);
+
+    if (!company_name || isNaN(parsedAmount) || isNaN(parsedShares) || isNaN(parsedPurchasePrice) || !sector) {
+        return res.status(400).json({ error: "Invalid investment amount" });
     }
 
     const userId = req.session.userId;
-    const pricePerShare = purchase_price;
-    const totalAmount = shares * purchase_price;
+    const totalAmount = parsedShares * parsedPurchasePrice;
 
     const query = `
         INSERT INTO investments 
@@ -163,16 +193,17 @@ app.post('/add-investor', (req, res) => {
 
     connection.query(
         query,
-        [company_name, amount, shares, purchase_price, pricePerShare, sector, totalAmount, userId],
+        [company_name, parsedAmount, parsedShares, parsedPurchasePrice, parsedPurchasePrice, sector, totalAmount, userId],
         (err) => {
             if (err) {
                 console.error('Error saving investment data:', err.message);
-                return res.status(500).send('Error saving investment data');
+                return res.status(500).json({ error: "Error saving investment data" });
             }
             res.redirect('/dashboard');
         }
     );
 });
+
 
 // Stored data route
 app.get('/stored-data', (req, res) => {
@@ -282,7 +313,7 @@ app.get('/logout', (req, res) => {
 });
 
 // Server
-const PORT = process.env.PORT || 2000;
+const PORT = process.env.PORT || 2001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
